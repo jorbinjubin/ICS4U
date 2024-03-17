@@ -40,10 +40,20 @@ const close = new Image(20,18);
 const fullscreen = new Image(20,18);
 const floating = new Image(20,18);
 
+const minimize_p = new Image(20,18);
+const close_p = new Image(20,18);
+const fullscreen_p = new Image(20,18);
+const floating_p = new Image(20,18);
+
 minimize.src="assets/minimize.png";
 close.src="assets/close.png";
-fullscreen.src="assets/maximize.png";
-floating.src="assets/float.png";
+fullscreen.src="assets/fullscreen.png";
+floating.src="assets/floating.png";
+
+minimize_p.src="assets/minimize_pressed.png"
+close_p.src="assets/close_pressed.png";
+fullscreen_p.src="assets/fullscreen_pressed.png";
+floating_p.src="assets/floating_pressed.png";
 
 class Container {
     constructor(x, y, width, height, title) {
@@ -75,7 +85,7 @@ class Container {
         c.fillStyle=colors.wht;
         c.fillText(this.title, x+27, y+21);
 
-        c.drawImage(close, x+width-3-24, y+6)
+        !cursor.withinHeld(x+width-3-24, y+6, x+width-3-4, y+6+18)? c.drawImage(close, x+width-3-24, y+6) : c.drawImage(close_p, x+width-3-24, y+6);
         if(this.maximized) c.drawImage(floating, x+width-3-48, y+6);
         else c.drawImage(fullscreen, x+width-3-48, y+6);
         c.drawImage(minimize, x+width-3-72, y+6);
