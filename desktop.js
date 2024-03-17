@@ -33,6 +33,7 @@ class Container {
         }
         c.fillRect(x+3, y+3, width-6, 24);
         c.font="16px win9xfont";
+        c.fillStyle="#fff";
         c.fillText(this.title, x+27, y+3);
     }
 }
@@ -70,6 +71,8 @@ function mousemove(event) {
 let containers = [];
 containers.push(new Container(50,100,800,500,"Test"));
 function draw() {
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
     clear();
     for(const b of containers){
         b.draw(50,100,800,500);
