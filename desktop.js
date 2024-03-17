@@ -1,7 +1,6 @@
 const canvas = document.getElementById("desktop");
 const c = canvas.getContext("2d");
 c.fillStyle="#bbbbbb";
-
 // Variables
 let isHolding = false;
 let cursor = {
@@ -11,28 +10,39 @@ let cursor = {
     lasty:0,
     held:false
 };
-let container =  {
-    x:0,
-    y:0,
-    title:"",
-    width:0,
-    height:0,
-    minimized:true,
-    hovered:false,
-    selected:false,
-    open: function() {
-        //drawContainer(this.x, this.y, this.width, this.height, this.title);
-    },
-    close: function() {
-        // later lolol
+class Container {
+    constructor(x, y, width, height, title) {
+        this.x=x;
+        this.y=y;
+        this.width=width;
+        this.height=height;
+        this.title=title;
+
+        this.selected=true;
+        this.minimized=false;
     }
-};
+    draw(x, y, width, height) {
+        c.fillStyle="#eeeeee";
+        c.fillRect(x-2,y-2, width+4, height+4);
+        c.fillStyle="#bbbbbb"
+        c.fillRect(x, y, width, height);
+        if(this.selected) {
+            c.fillStyle="#00008b";
+        } else {
+            c.fillStyle="#808080";
+        }
+        c.fillRect(x+3, y+3, width-6, 24);
+        c.font="16px win9xfont";
+        c.fillText(this.title, x+27, y+3);
+    }
+}
+
 let icon = {
     x:0,
     y:0,
     image:"",
     hovered:false
-}
+};
 // Event Listeners
 window.addEventListener('mousemove', mousemove);
 window.addEventListener("mousedown", mousedown);
@@ -57,22 +67,16 @@ function mousemove(event) {
         cursor.y = event.pageY;
     }
 }
-
-requestAnimationFrame(draw);
+let containers = [];
+containers.push(new Container(50,100,800,500,"Test"));
 function draw() {
     clear();
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    if(cursor.held) {
-        c.fillStyle = "#bbbbbb";
-        c.fillRect(cursor.x, cursor.y, 300, 225);
-    }
-    else {
-        c.fillStyle = "#a6a6a6";
-        c.fillRect(cursor.lastx, cursor.lasty, 300, 225);
+    for(const b of containers){
+        b.draw(50,100,800,500);
     }
     requestAnimationFrame(draw);
 }
+draw();
 function clear() {
     c.fillStyle = "DarkCyan";
     c.fillRect(0,0,c.canvas.width, c.canvas.height);
